@@ -20,13 +20,17 @@ class MakeHotels{
         myWriter.close();
     }
 
-    public static void printRooms(){
-        for (int i=0;i<40;i++){
-            for (int j=0; j<5;j++){
+    public static void printRooms() throws IOException{
+        FileWriter myWriter = new FileWriter("Rooms.txt");
+
+        for (int i=1;i<41;i++){
+            for (int j=1; j<6;j++){
                 int randCap = ThreadLocalRandom.current().nextInt(1, 7);
-                System.out.println("("+(i+1)+","+randCap+"),");
+                System.out.print("("+i+","+j+","+randCap+"),\n");
+                myWriter.write("("+i+","+j+","+randCap+"),\n");
             }
         }
+        myWriter.close();
     }
 
     public static void main(String[] args) throws IOException {

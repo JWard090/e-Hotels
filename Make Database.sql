@@ -73,7 +73,7 @@ create table Booking(
 	hotelid integer not null,
 	roomnum integer not null,
 	/*roomID integer not null,*/
-	cSIN integer not null,
+	cSIN integer,
 	isRental boolean not null,
 	inDate date not null,
 	outDate date not null,
