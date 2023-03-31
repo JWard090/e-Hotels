@@ -1,0 +1,75 @@
+/*
+	This creates the database, without restraints
+*/
+
+SET search_path = "e-Hotel";
+
+Create table HotelChain(
+	chainID Serial Primary key,
+	hname varchar(20),
+	offPhone integer,
+	offAdd Varchar(40),
+	offEmail Varchar(20)
+);
+
+Create table Hotel (
+	hotelID Serial Primary key,
+	chainID integer,
+	hPhone integer,
+	rating integer,
+	hEmail varchar(20),
+	noRooms integer,
+	hAdd varchar(40),
+	hArea varchar(20),
+	Foreign key (chainID) references HotelChain(chainID),
+	constraint rating check (rating >=1 and rating <=5) /* rating 1-5 */
+);
+
+Create table Room(
+	roomID Serial Primary key,
+	hotelID integer,
+	capacity integer,
+	roomView varchar(20),
+	extendable boolean,
+	price numeric(10,2), /* Maximum price of $999,999.99 */
+	Foreign Key (hotelID) references Hotel(hotelID)
+);
+
+Create table AmenityList(
+	roomID integer,
+	amenity varchar(20),
+	foreign key (roomID) references Room(roomID)
+);
+
+Create table Customer(
+	cSIN integer,
+	cName varchar(20),
+	cAddress varchar(40),
+	cRegDate date,
+	primary key (cSIN)
+);
+
+create table Employee(
+	eSIN integer,
+	eName varchar(20),
+	eAddress varchar(40),
+	primary key (eSIN)
+);
+
+create table Booking(
+	bookingID Serial Primary key,
+	roomID integer,
+	cSIN integer,
+	checkIn boolean,
+	isRental boolean,
+	inDate date,
+	outDate date,
+	Foreign key (roomID) references Room(roomID),
+	Foreign key (cSIN) references Customer(cSIN)
+);
+
+create table RoleList(
+	eSIN integer,
+	erole varChar(20),
+	foreign key (eSIN) references Employee(eSIN)
+);

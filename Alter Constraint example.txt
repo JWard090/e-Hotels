@@ -1,0 +1,2 @@
+ALTER Table *tablename*
+Add constraint Rating CHECK (Rating >= 1 and Rating <=10);
