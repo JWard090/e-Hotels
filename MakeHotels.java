@@ -20,7 +20,7 @@ class MakeHotels{
         myWriter.close();
     }
 
-    public static void printRooms() throws IOException{
+    public static void makeRooms() throws IOException{
         FileWriter myWriter = new FileWriter("Rooms.txt");
 
         for (int i=1;i<41;i++){
@@ -34,6 +34,6 @@ class MakeHotels{
     }
 
     public static void main(String[] args) throws IOException {
-        printRooms();
+        makeRooms();
     }
 }

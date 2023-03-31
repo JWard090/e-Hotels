@@ -1,7 +1,7 @@
 /*
 	This creates the database, without restraints
 */
-drop schema ehotel cascade;
+drop schema if exists ehotel cascade;
 CREATE schema eHotel;
 SET search_path = ehotel;
 
@@ -84,5 +84,8 @@ create table Booking(
 create table RoleList(
 	eSIN integer,
 	erole varChar(20),
+	hotelid integer,
+	Primary key (eSIN, erole,hotelid),
+	foreign key (hotelid) references Hotel(hotelid),
 	foreign key (eSIN) references Employee(eSIN)
 );

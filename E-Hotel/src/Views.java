@@ -2,16 +2,21 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class Views {
+    //Before running, make sure the next three fields are updated with the proper information
+    static String sqlurl = "jdbc:postgresql://localhost:5432/postgres";
+    static String sqluser = "postgres";
+    static String sqlpassword = "HzqN8Bkf";
+
     public static void main(String[] args) {
         LocalDate bookingDay = LocalDate.of(2023,03,31); //Change this to change what day to view available capacity
-        view1(bookingDay);
+        //view1(bookingDay);
+        view2(2);
     }
 
     public static void view1(LocalDate dateh){
         //the number of available rooms per area
         try{
-            Connection db = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                    "postgres", "HzqN8Bkf");
+            Connection db = DriverManager.getConnection(sqlurl, sqluser, sqlpassword);
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("select hArea, sum(capacity) as area_capacity\n" +
                     "\tfrom ehotel.hotel h\n" +
@@ -35,8 +40,7 @@ public class Views {
     public static void view2(int hotelID){
         //the capacity of all the rooms of a specific hotel
         try {
-            Connection db = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                    "postgres", "HzqN8Bkf");
+            Connection db = DriverManager.getConnection(sqlurl, sqluser, sqlpassword);
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("select hname, hotelid, roomid, capacity\n" +
                     "\tfrom ehotel.hotelchain\n" +
