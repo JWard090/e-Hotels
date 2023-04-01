@@ -46,7 +46,7 @@ Create table Room(
 	capacity integer,
 	roomView varchar(20),
 	extendable boolean,
-	price numeric(10,2), /* Maximum price of $999,999.99 */
+	price integer, /* Rooms are priced in whole dollars */
 	Primary key (hotelID, roomNum),
 	Foreign Key (hotelID) references Hotel(hotelID)
 );
@@ -74,7 +74,7 @@ create table Booking(
 	roomnum integer not null,
 	/*roomID integer not null,*/
 	cSIN integer,
-	isRental boolean not null,
+	isRental boolean not null default false,
 	inDate date not null,
 	outDate date not null,
 	Foreign key (hotelid,roomnum) references Room(hotelid,roomnum),

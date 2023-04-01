@@ -3,25 +3,10 @@
 */
 SET search_path = ehotel;
 
-select * from hotel;
-
-select h.hArea, r.capacity from hotel h
-join room r
-on h.hotelID = r.hotelID;
-
-select hArea, sum(capacity) as area_capacity
-	from hotel h
-	join room r
-	on h.hotelID = r.hotelID
-	group by hArea;
-
-delete from booking;
-insert into booking(hotelid,roomnum,isrental,indate,outdate)
-values
-	(1,0,false,'2023-04-30','2023-05-03');
-
 /*
 	View 1: the number of available rooms per area
+	The default availability is for today's date. Checking for other dates requires
+	modifying the SQL code below or running view1 on Views.java 
 */
 
 select hArea, sum(capacity) as area_capacity
@@ -35,5 +20,12 @@ select hArea, sum(capacity) as area_capacity
 	group by harea;
 
 /*
-	the capacity of all the rooms of a specific hotel
+	View 2: The capacity of all the rooms of a specific hotel
+	The code shown below shows the capacities from hotelid 1 by default.
+	Viewing other hotels requires modifying the code or running view2 on Views.java
 */
+select hname, hotelid, roomnum, capacity
+	from ehotel.hotelchain
+	natural join ehotel.hotel
+	natural join ehotel.room
+	where hotelid = 1; --Change hotelid here for other hotels

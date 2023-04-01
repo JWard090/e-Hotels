@@ -42,13 +42,13 @@ public class Views {
         try {
             Connection db = DriverManager.getConnection(sqlurl, sqluser, sqlpassword);
             Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery("select hname, hotelid, roomid, capacity\n" +
+            ResultSet rs = st.executeQuery("select hname, hotelid, roomnum, capacity\n" +
                     "\tfrom ehotel.hotelchain\n" +
                     "\tnatural join ehotel.hotel\n" +
                     "\tnatural join ehotel.room\n" +
                     "where hotelid = "+hotelID+";");
 
-            System.out.println("hname\thotelid\troomid\tcapacity");
+            System.out.println("hname\thotelid\troomNum\tcapacity");
             while (rs.next()){
                 System.out.println(rs.getString(1)+"\t"+rs.getString(2)+"\t\t"+rs.getString(3)+"\t\t"+rs.getString(4));
             }
