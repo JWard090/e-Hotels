@@ -1,29 +1,52 @@
 SET search_path = ehotel;
 
-Create function increment_hotels()
-Returns trigger as
-$BODY$
+CREATE FUNCTION increment_hotels() RETURNS TRIGGER AS $incrementHotelNo$
 BEGIN
 	update hotelchain
 	SET nohotels = nohotels + 1
-	where hname=nrow.hname
-return new;
-end
-$BODY$ language plpgsql;
+	where hname=NEW.hname;
+	RETURN NEW;
+END;
+$incrementHotelNo$ LANGUAGE plpgsql;
 
-create trigger incrementHotelNo
-	after insert on hotel
-	referencing new row as nrow
-	for each row
-	EXECUTE PROCEDURE increment_hotels();
+CREATE TRIGGER incrementHotelNo AFTER INSERT ON hotel
+FOR EACH ROW EXECUTE PROCEDURE increment_hotels();
 
-/*
-create trigger decrementHotelNo
-after delete on hotel
-referencing old row as orow
-for each row
-begin atomic
+
+CREATE FUNCTION decrement_hotels() RETURNS TRIGGER AS $decrementHotelNo$
+BEGIN
 	update hotelchain
-	SET nohotels -=1 where hname=orow.hname
-end;
-*/
+	SET nohotels = nohotels - 1
+	where hname=OLD.hname;
+	RETURN OLD;
+END;
+$decrementHotelNo$ LANGUAGE plpgsql;
+
+CREATE TRIGGER decrementHotelNo AFTER DELETE ON hotel
+FOR EACH ROW EXECUTE PROCEDURE decrement_hotels();
+
+
+CREATE FUNCTION increment_rooms() RETURNS TRIGGER AS $incrementRoomNo$
+BEGIN
+	update hotel
+	SET noRooms = noRooms + 1
+	where hotelID=NEW.hotelID;
+	RETURN NEW;
+END;
+$incrementRoomNo$ LANGUAGE plpgsql;
+
+CREATE TRIGGER incrementRoomNo AFTER INSERT ON room
+FOR EACH ROW EXECUTE PROCEDURE increment_rooms();
+
+
+CREATE FUNCTION decrement_rooms() RETURNS TRIGGER AS $decrementRoomNo$
+BEGIN
+	update hotel
+	SET noRooms = noRooms - 1
+	where hotelID=OLD.hotelID;
+	RETURN OLD;
+END;
+$decrementRoomNo$ LANGUAGE plpgsql;
+
+CREATE TRIGGER decrementRoomNo AFTER INSERT ON room
+FOR EACH ROW EXECUTE PROCEDURE decrement_rooms();
