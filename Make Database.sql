@@ -7,9 +7,9 @@ SET search_path = ehotel;
 
 Create table HotelChain(
 	hname varchar(20),
-	offPhone integer not null unique,
-	offAdd Varchar(40) not null unique,
-	offEmail Varchar(20) not null unique,
+	offPhone integer unique,
+	offAdd Varchar(40) unique,
+	offEmail Varchar(20) unique,
 	noHotels integer default 0,
 	Primary key (hname),
 	constraint offPhone check (offPhone > 1000000000 and offPhone < 9999999999)
@@ -25,26 +25,25 @@ create table Employee(
 Create table Hotel (
 	hotelID Serial Primary key,
 	hname varchar(20),
-	hPhone integer not null,
+	hPhone integer,
 	rating integer not null,
-	hEmail varchar(20)not null,
-	noRooms integer not null,
-	hAdd varchar(40) not null,
+	hEmail varchar(20),
+	noRooms integer default 0,
+	hAdd varchar(40) unique,
 	hArea varchar(20) not null,
 	managerID integer,
 	Foreign key (hname) references HotelChain(hname),
 	Foreign key (managerID) references Employee(eSIN),
-	constraint rating check (rating >=1 and rating <=5), /* rating 1-5 */
-	constraint noRooms check (noRooms > 0) /*hotel must have at least 1 room*/
+	constraint rating check (rating >=1 and rating <=5) /* rating 1-5 */
 );
 
 Create table Room(
 	hotelID integer,
 	roomNum integer,
 	capacity integer not null,
-	roomView varchar(20) not null,
-	extendable boolean not null,
-	price integer, /* Rooms are priced in whole dollars */
+	roomView varchar(20),
+	extendable boolean,
+	price integer not null, /* Rooms are priced in whole dollars */
 	Primary key (hotelID, roomNum),
 	Foreign Key (hotelID) references Hotel(hotelID),
 	constraint capacity check (capacity > 0) /*the capacity of a room must be at least 1*/
@@ -61,7 +60,7 @@ Create table AmenityList(
 Create table Customer(
 	cSIN integer,
 	cName varchar(20) not null,
-	cAddress varchar(40) not null,
+	cAddress varchar(40),
 	cRegDate date default CURRENT_TIMESTAMP,
 	primary key (cSIN)
 );
