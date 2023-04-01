@@ -5,9 +5,6 @@ drop schema if exists ehotel cascade;
 CREATE schema eHotel;
 SET search_path = ehotel;
 
-/*
-	It might be smart to make the hname the primary key, so the user doesn't need to know the chainid numbers by heart
-*/
 Create table HotelChain(
 	hname varchar(20),
 	offPhone integer,
@@ -40,7 +37,6 @@ Create table Hotel (
 );
 
 Create table Room(
-	--roomID Serial Primary key,
 	hotelID integer,
 	roomNum integer,
 	capacity integer,
@@ -52,7 +48,6 @@ Create table Room(
 );
 
 Create table AmenityList(
-	--roomID integer,
 	hotelID integer,
 	roomNum integer,
 	amenity varchar(20),
@@ -72,7 +67,6 @@ create table Booking(
 	bookingID Serial Primary key,
 	hotelid integer not null,
 	roomnum integer not null,
-	/*roomID integer not null,*/
 	cSIN integer,
 	isRental boolean not null default false,
 	inDate date not null,
