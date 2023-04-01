@@ -8,7 +8,7 @@ class MakeHotels{
     static String[] chains = {"Hilton", "Marriot", "Best Western", "Days Inn", "Brook Street"};
     static String[] cities = {"Barrie","Ottawa","Toronto","Stouffville","Gatineau","Washington","Chicago","Vancouver","Montreal","New York","Los Angeles","Phoenix","Calgary","Halifax","Hamilton","Winnipeg"};
     
-    public static void printHotels() throws IOException{
+    public static void makeHotels() throws IOException{
         FileWriter myWriter = new FileWriter("Hotels.txt");
 
         for (int i=0;i<chains.length;i++){
