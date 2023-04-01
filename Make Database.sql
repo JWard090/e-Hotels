@@ -68,8 +68,8 @@ Create table Customer(
 
 create table Booking(
 	bookingID Serial Primary key,
-	hotelid integer not null,
-	roomnum integer not null,
+	hotelid integer,
+	roomnum integer,
 	cSIN integer,
 	isRental boolean not null default false,
 	inDate date not null,
