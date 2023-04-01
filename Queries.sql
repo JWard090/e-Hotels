@@ -29,6 +29,16 @@ Update booking
 	SET isrental = true
 	WHERE bookingid=1;
 
+--This view shows the hotel rooms that are available today
+select hotelid, hname, harea, roomnum, capacity, price
+	from hotel h
+	natural join room r
+	where not exists (select 1 from booking b
+					 where r.hotelid = b.hotelid and r.roomnum = b.roomnum
+					 and CURRENT_TIMESTAMP --Update this line to change the date
+					  between b.indate and b.outdate)
+	order by capacity;
+
 --This shows the hotel rooms with a capacity of at least 3
 select hotelid, hname, harea, roomnum, capacity, price
 	from ehotel.hotel
