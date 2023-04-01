@@ -10,45 +10,48 @@ SET search_path = ehotel;
 */
 Create table HotelChain(
 	hname varchar(20),
-	offPhone integer,
-	offAdd Varchar(40),
-	offEmail Varchar(20),
+	offPhone integer not null unique,
+	offAdd Varchar(40) not null unique,
+	offEmail Varchar(20) not null unique,
 	noHotels integer default 0,
-	Primary key (hname)
+	Primary key (hname),
+	constraint offPhone check (offPhone > 1000000000 and offPhone < 9999999999)
 );
 
 create table Employee(
 	eSIN integer,
-	eName varchar(20),
-	eAddress varchar(40),
+	eName varchar(20) not null,
+	eAddress varchar(40) not null,
 	primary key (eSIN)
 );
 
 Create table Hotel (
 	hotelID Serial Primary key,
 	hname varchar(20),
-	hPhone integer,
-	rating integer,
-	hEmail varchar(20),
-	noRooms integer,
-	hAdd varchar(40),
-	hArea varchar(20),
+	hPhone integer not null,
+	rating integer not null,
+	hEmail varchar(20)not null,
+	noRooms integer not null,
+	hAdd varchar(40) not null,
+	hArea varchar(20) not null,
 	managerID integer,
 	Foreign key (hname) references HotelChain(hname),
 	Foreign key (managerID) references Employee(eSIN),
-	constraint rating check (rating >=1 and rating <=5) /* rating 1-5 */
+	constraint rating check (rating >=1 and rating <=5), /* rating 1-5 */
+	constraint noRooms check (noRooms > 0) /*hotel must have at least 1 room*/
 );
 
 Create table Room(
 	--roomID Serial Primary key,
 	hotelID integer,
 	roomNum integer,
-	capacity integer,
-	roomView varchar(20),
-	extendable boolean,
+	capacity integer not null,
+	roomView varchar(20) not null,
+	extendable boolean not null,
 	price integer, /* Rooms are priced in whole dollars */
 	Primary key (hotelID, roomNum),
-	Foreign Key (hotelID) references Hotel(hotelID)
+	Foreign Key (hotelID) references Hotel(hotelID),
+	constraint capacity check (capacity > 0) /*the capacity of a room must be at least 1*/
 );
 
 Create table AmenityList(
@@ -62,8 +65,8 @@ Create table AmenityList(
 
 Create table Customer(
 	cSIN integer,
-	cName varchar(20),
-	cAddress varchar(40),
+	cName varchar(20) not null,
+	cAddress varchar(40) not null,
 	cRegDate date default CURRENT_TIMESTAMP,
 	primary key (cSIN)
 );
