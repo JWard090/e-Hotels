@@ -1,5 +1,5 @@
 /*
-	This creates the database, without restraints
+	This creates the database, with constraints
 */
 drop schema if exists ehotel cascade;
 CREATE schema eHotel;
