@@ -1,5 +1,0 @@
-For website:
-https://getbootstrap.com/
-https://bootstrapformbuilder.com/
-
-JQuery for popups (if necessary)
