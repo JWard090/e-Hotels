@@ -1,5 +1,5 @@
 /*
-	This creates the database, with constraints
+	This creates the database, without restraints
 */
 drop schema if exists ehotel cascade;
 CREATE schema eHotel;
@@ -32,7 +32,7 @@ Create table Hotel (
 	hAdd varchar(40) unique,
 	hArea varchar(20) not null,
 	managerID integer,
-	Foreign key (hname) references HotelChain(hname),
+	Foreign key (hname) references HotelChain(hname) ON DELETE CASCADE,
 	Foreign key (managerID) references Employee(eSIN),
 	constraint rating check (rating >=1 and rating <=5) /* rating 1-5 */
 );
@@ -45,7 +45,7 @@ Create table Room(
 	extendable boolean,
 	price integer not null, /* Rooms are priced in whole dollars */
 	Primary key (hotelID, roomNum),
-	Foreign Key (hotelID) references Hotel(hotelID),
+	Foreign Key (hotelID) references Hotel(hotelID) ON DELETE CASCADE,
 	constraint capacity check (capacity > 0) /*the capacity of a room must be at least 1*/
 );
 
